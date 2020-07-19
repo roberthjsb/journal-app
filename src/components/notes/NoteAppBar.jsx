@@ -5,12 +5,12 @@ export const NoteAppBar = () => {
         <div className="notes__appbar">
             <span>28 de agosto 2020</span>
             <div>
-                <botton className="btn">
+                <button className="btn">
                     Picture
-                </botton>
-                <botton className="btn">
+                </button>
+                <button className="btn">
                     Save
-                </botton>
+                </button>
             </div>
         </div>
     )
