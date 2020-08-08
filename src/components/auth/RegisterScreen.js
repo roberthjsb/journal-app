@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import validator from "validator";
-import { useForm } from "./../../hooks/useForm";
+import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from 'react-redux';
-import { setError, removeError } from './../../actions/ui';
-import { registerWithEmailAndPassword } from './../../actions/auth';
+import { setError, removeError } from '../../actions/ui';
+import { registerWithEmailAndPassword } from '../../actions/auth';
 
 export const RegisterScreen = () => {
 
   const dispatch = useDispatch();
-  const {msgError} = useSelector(state=> state.ui);
+  const { msgError } = useSelector(state => state.ui);
 
   const [formValues, handleChange] = useForm({
     name: "Roberth J",
@@ -22,7 +22,7 @@ export const RegisterScreen = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      dispatch(registerWithEmailAndPassword(email , password ,name));
+      dispatch(registerWithEmailAndPassword(email, password, name));
     }
   };
 
@@ -33,10 +33,10 @@ export const RegisterScreen = () => {
     } else if (!validator.isEmail(email)) {
       dispatch(setError("Email is not valid"))
       return false;
-    } else if(password !== confirmationpass || password.length < 5) {
+    } else if (password !== confirmationpass || password.length < 5) {
       dispatch(setError("Password should ve at least 6 characters and match password with confirmation"))
       return false;
-    }else{
+    } else {
       dispatch(removeError())
       return true
     }
@@ -45,7 +45,7 @@ export const RegisterScreen = () => {
     <>
       <h3 className="auth__title">Login</h3>
       <form onSubmit={handleRegister}>
-         {msgError && <div className="auth__alert-error">{msgError}</div>}
+        {msgError && <div className="auth__alert-error">{msgError}</div>}
         <input
           className="auth__input"
           type="text"
@@ -80,8 +80,8 @@ export const RegisterScreen = () => {
           value={confirmationpass}
           onChange={handleChange}
         />
-        <button 
-          className="btn btn-primary btn-block mb-5" 
+        <button
+          className="btn btn-primary btn-block mb-5"
           type="submit"
         >
           Register

@@ -6,7 +6,7 @@ export const setError = (err) =>( {
     payload: err
 })
 
-export const removeError = (err) =>( {
+export const removeError = () =>( {
     type: types.uiRemoveError
 })
 

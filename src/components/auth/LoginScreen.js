@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useForm } from "./../../hooks/useForm";
+import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
   startLoginEmailPassword,
   startGoogleLogin,
-} from "./../../actions/auth";
+} from "../../actions/auth";
 
 export const LoginScreen = () => {
   

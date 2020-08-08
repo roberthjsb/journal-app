@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { NoteAppBar } from "./NoteAppBar";
 import { useSelector } from "react-redux";
-import { useForm } from "./../../hooks/useForm";
+import { useForm } from "../../hooks/useForm";
 import { useDispatch } from "react-redux";
 import { activeNote, startDeleting } from "../../actions/notes";
 
@@ -14,14 +14,13 @@ export const NoteScreen = () => {
   const activeID = useRef(note.id);
 
   useEffect(() => {
-    if (activeID.current != note.id) {
+    if (activeID.current !== note.id) {
       reset(note);
       activeID.current = note.id;
     }
   }, [note, reset]);
 
   useEffect(() => {
-    console.log("activeNote....");
     dispatch(activeNote(formValues.id, { ...formValues }));
   }, [formValues, dispatch]);
   const handleDeleteNote = (id) => {

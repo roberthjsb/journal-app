@@ -7,7 +7,7 @@ import { notLogout } from './notes';
 export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
         dispatch(startLoading())
-        firebase.auth().signInWithEmailAndPassword(email, password)
+        return firebase.auth().signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName))                
             })
@@ -23,7 +23,7 @@ export const startGoogleLogin = () => {
         firebase.auth().signInWithPopup(googleAuthProvider)
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName))
-            })
+            }).catch(e=>console.log(e))
     }
 }
 
@@ -31,9 +31,10 @@ export const registerWithEmailAndPassword = (email, password, name) => {
     return (dispatch) => {
         firebase.auth().createUserWithEmailAndPassword(email, password.toString())
             .then(async ({ user }) => {
+                console.log('createUserWithEmailAndPassword')
                 await user.updateProfile({ displayName: name });
                 dispatch(login(user.uid, user.displayName));
-            }).catch(e => console.log(e))
+            }).catch(e=>console.log(e))
     }
 }
 
@@ -42,7 +43,9 @@ export const login = (uid, displayName) => ({
     payload: { uid, displayName }
 })
 export const startLogout = () => {
+    console.log('startLogout')
     return async  (dispatch)=>{
+        console.log('startLogout dispatch')
         await firebase.auth().signOut()
         dispatch(logout())
         dispatch(notLogout())
