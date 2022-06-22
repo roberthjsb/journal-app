@@ -8,7 +8,7 @@ export const JournalLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <NavBar drawerWidth={drawerWidth}/>
-      <SideBar />
+      <SideBar drawerWidth={drawerWidth}/>
       <Box component={"main"} sx={{ flexGrow: 1, p: 1 }}>
         {children}
       </Box>
