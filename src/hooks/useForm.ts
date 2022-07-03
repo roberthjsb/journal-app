@@ -25,7 +25,21 @@ export const useForm = (initialForm: stateForm = {}, formValidations?: stateForm
         createValidator()
     }, [formState])
 
-    const isFormValid = useMemo((): boolean => Object.values(formStateValidation).some(v => v !== null), [formState])
+    // const isFormValid = useMemo((): boolean => {
+    //     const foo = Object.values(formStateValidation);
+    //     const value= foo.some(v => v !== null);
+    //     return value;
+    // }, [formStateValidation])
+
+
+
+    const isFormValid=useMemo(()=>{
+        for(const formValue of Object.keys(formStateValidation)){
+            if(formStateValidation[formValue]!== null)return false;
+       }
+        return true;
+    },[formStateValidation])
+
 
 
     const onInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -41,10 +55,13 @@ export const useForm = (initialForm: stateForm = {}, formValidations?: stateForm
     }
 
     const createValidator = () => {
-        const formValidatorResult = Object.entries(formValidations ?? {}).reduce((prev, [key, [fn, errmsg]]) => {
-            prev[`${key}Valid`] = fn(formState[key]) ? null : errmsg;
-            return prev;
-        }, {} as stateValidationResult)
+        const formValidatorResult = Object
+            .entries(formValidations ?? {})
+            .reduce((prev, current) => {
+                const [key, [fn, errmsg]] = current;
+                prev[`${key}Valid`] = fn(formState[key]) ? null : errmsg;
+                return prev;
+            }, {} as stateValidationResult)
 
         setFormStateValidation(formValidatorResult)
     }

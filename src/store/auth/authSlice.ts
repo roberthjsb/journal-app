@@ -1,15 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-type authState = {
-    status: 'checking' | 'not-authenticated' | 'authenticated',
-    uid: string | null,
-    email: string | null,
-    displayName: string | null,
-    photoURL: string | null,
-    errorMessage: string | null
+export type statusState={ status?: 'checking' | 'not-authenticated' | 'authenticated'}
+export type errorState= { errorMessage?: string | null}
+export type AuthUserState = {
+    uid?: string | null,
+    email?: string | null,
+    displayName?: string | null,
+    photoURL?: string | null,
 }
-const initialState: authState = {
-    status: 'not-authenticated',
+export type AuthState= statusState & AuthUserState & errorState;
+export type StatusResponse = {ok:boolean};
+export type AuthResult = AuthState & StatusResponse
+
+
+
+const initialState: AuthState = {
+    status: 'checking',
     uid: null,
     email: null,
     displayName: null,
@@ -21,7 +27,7 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<authState>) => {
+        login: (state, action: PayloadAction<AuthState>) => {
             state.status = 'authenticated';
             state.uid = action.payload.uid;
             state.email = action.payload.email;
@@ -29,13 +35,13 @@ export const authSlice = createSlice({
             state.photoURL = action.payload.photoURL;
             state.errorMessage = null
         },
-        logout: (state, action: PayloadAction<authState>) => {
+        logout: (state, action: PayloadAction<AuthState| undefined> ) => {
             state.status = 'not-authenticated';
             state.uid = null;
             state.email = null;
             state.displayName = null;
             state.photoURL = null;
-            state.errorMessage = action.payload.errorMessage
+            state.errorMessage = action.payload?.errorMessage??''
         },
         checkingCredencials: (state) => {
             state.status = 'checking'

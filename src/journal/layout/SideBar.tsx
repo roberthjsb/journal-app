@@ -13,8 +13,10 @@ import {
   Typography,
 } from "@mui/material";
 import React, { FC } from "react";
+import { useAppSelector } from "../../store";
 
 export const SideBar: FC<{ drawerWidth: number }> = ({ drawerWidth }) => {
+  const {displayName}= useAppSelector(state=>state.auth)
   return (
     <Box
       component={"nav"}
@@ -30,7 +32,7 @@ export const SideBar: FC<{ drawerWidth: number }> = ({ drawerWidth }) => {
       >
         <Toolbar>
           <Typography variant="h6" component={"div"} noWrap>
-            Roberth Salazar
+            {displayName}
           </Typography>
         </Toolbar>
         <Divider />

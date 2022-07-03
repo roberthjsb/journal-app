@@ -6,7 +6,7 @@ import { SideBar } from "./SideBar";
 const drawerWidth = 240;
 export const JournalLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex" }} className="animate__animated animate__fadeIn">
       <NavBar drawerWidth={drawerWidth}/>
       <SideBar drawerWidth={drawerWidth}/>
       <Box component={"main"} sx={{ flexGrow: 1, p: 1 , width:`calc(100% - ${drawerWidth}px)`}}>

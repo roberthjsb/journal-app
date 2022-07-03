@@ -1,11 +1,22 @@
-import { Google } from "@mui/icons-material";
-import { Grid, TextField, Link, Button, Typography } from "@mui/material";
-import { FormEvent, useState } from "react";
+import {
+  Grid,
+  TextField,
+  Link,
+  Button,
+  Typography,
+  Alert,
+} from "@mui/material";
+import { FormEvent, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   stateFormValidator as StateFormValidator,
   useForm,
 } from "../../hooks/useForm";
+import {
+  startRegisterUserWithCredential,
+  useAppDispatch,
+  useAppSelector,
+} from "../../store";
 import { AuthLayout } from "./authLayout";
 
 const formValidations: StateFormValidator = {
@@ -31,6 +42,7 @@ export const Register = () => {
     emailValid,
     passwordValid,
     displayNameValid,
+    formState,
     onInputChange,
     isFormValid,
   } = useForm(
@@ -43,10 +55,15 @@ export const Register = () => {
   );
 
   const [formSubmited, setFormSubmited] = useState(false);
+  const dispatch = useAppDispatch();
+  const { status, errorMessage } = useAppSelector((state) => state.auth);
+  const isCheckingAuth = useMemo(() => status === "checking", [status]);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     setFormSubmited(true);
+    if (!isFormValid) return;
+    dispatch(startRegisterUserWithCredential(formState));
   };
   return (
     <AuthLayout title="Registrar usuario">
@@ -92,8 +109,16 @@ export const Register = () => {
             />
           </Grid>
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
+            <Grid item xs={12} display={!!errorMessage ? '' : 'none'}>
+              <Alert severity="error">{errorMessage}</Alert>
+            </Grid>
             <Grid item xs={12}>
-              <Button variant="contained" fullWidth type="submit">
+              <Button
+                variant="contained"
+                fullWidth
+                type="submit"
+                disabled={isCheckingAuth}
+              >
                 Crear cuenta
               </Button>
             </Grid>
