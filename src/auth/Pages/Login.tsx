@@ -10,22 +10,37 @@ import {
   Typography,
 } from "@mui/material";
 import { AuthLayout } from "./authLayout";
-import { useForm } from "../../hooks/useForm";
+import { StateFormValidator, useForm } from "../../hooks/useForm";
 import {
   startGoogleSignIn,
   startLoginUserWithEmailAndPassword,
   useAppDispatch,
   useAppSelector,
 } from "../../store";
+const formData = {
+  email: "roberth@gmail.com",
+  password: "1234567",
+}
+
+const formValidations: StateFormValidator = {
+  email: [
+    (value: string) => value.includes("@"),
+    "El correo debe de tener una @",
+  ],
+  password: [
+    (value: string) => value.length >= 6,
+    "El password debe de tener más de 6 letras.",
+  ]
+};
+
+
+
 
 export const Login = () => {
   const dispatch = useAppDispatch();
   const { status, errorMessage } = useAppSelector((state) => state.auth);
 
-  const { email, password, onInputChange } = useForm({
-    email: "roberth@gmail.com",
-    password: "123456",
-  });
+  const { email, password, onInputChange,isFormValid } = useForm(formData,formValidations);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,7 +89,7 @@ export const Login = () => {
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item xs={12} sm={6}>
               <Button
-                disabled={isAuthenticating}
+                disabled={isAuthenticating || !isFormValid}
                 type="submit"
                 variant="contained"
                 fullWidth
@@ -84,7 +99,7 @@ export const Login = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Button
-                disabled={isAuthenticating}
+                disabled={isAuthenticating }
                 type="button"
                 onClick={onGoogleSignIn}
                 variant="contained"

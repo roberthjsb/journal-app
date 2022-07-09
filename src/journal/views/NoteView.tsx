@@ -1,9 +1,21 @@
 import { SaveOutlined } from "@mui/icons-material";
 import { Button, Grid, TextField, Typography } from "@mui/material";
-import React from "react";
+import { useMemo } from "react";
+import { useForm } from "../../hooks/useForm";
+import { useAppSelector } from "../../store";
+import { JournalNote } from "../../store/journal/journalSlice";
 import { ImageGallery } from "../components/ImageGallery";
+import { Journal } from "../Pages/Journal";
 
 export const NoteView = () => {
+  const { active: activeNote } = useAppSelector((state) => state.journal);
+  const { title, body, date, onInputChange } = useForm(activeNote!);
+
+  const dateString = useMemo(() => {
+    const newDate = new Date(date);
+    return newDate.toUTCString();
+  }, [date]);
+
   return (
     <Grid
       container
@@ -13,7 +25,7 @@ export const NoteView = () => {
     >
       <Grid item>
         <Typography fontSize={39} fontWeight="light">
-          23 de julio, 2022
+          {dateString}
         </Typography>
       </Grid>
       <Grid item>
@@ -24,24 +36,29 @@ export const NoteView = () => {
       </Grid>
       <Grid container>
         <TextField
-          type={"text"}
+          type={title}
           variant="filled"
           fullWidth
           placeholder="Ingrese un título"
           label="Título"
           sx={{ border: "none", mb: 1 }}
+          value={title}
+          name={'title'}
+          onChange={onInputChange}
         />
         <TextField
-          type={"text"}
+          type={body}
           variant="filled"
           fullWidth
           multiline
           placeholder="¿Que sucedio el dia de hoy?"
           minRows={5}
+          value={body}
+          name={'body'}
+          onChange={onInputChange}
         />
       </Grid>
-      <ImageGallery/>
-  
+      <ImageGallery />
     </Grid>
   );
 };

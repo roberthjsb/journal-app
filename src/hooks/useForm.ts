@@ -1,21 +1,28 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
-
 interface stateForm {
     [key: string]: any;
 }
-export interface stateFormValidator {
+export interface StateFormValidator {
     [key: string]: [(value: string) => boolean, string]
 }
 
-export interface stateValidationResult {
+export type stateValidationResult = {
     [key: string]: string | null;
 }
-interface useFormReturn extends stateForm {
+// export type stateValidationResult<T> = {
+//     [p in keyof T as `${p}Valid`]: string | null;
+// }
+
+
+
+type useFormReturn = stateForm & {
     onInputChange: ({ target }: ChangeEvent<HTMLInputElement>) => void
     onResetForm: () => void;
+    isFormValid: boolean
+
 }
-export const useForm = (initialForm: stateForm = {}, formValidations?: stateFormValidator): useFormReturn => {
+export function useForm<T>(initialForm: stateForm = {}, formValidations?: StateFormValidator): useFormReturn {
 
     const [formState, setFormState] = useState<stateForm>(initialForm);
     const [formStateValidation, setFormStateValidation] = useState<stateValidationResult>({});
@@ -25,25 +32,20 @@ export const useForm = (initialForm: stateForm = {}, formValidations?: stateForm
         createValidator()
     }, [formState])
 
-    // const isFormValid = useMemo((): boolean => {
-    //     const foo = Object.values(formStateValidation);
-    //     const value= foo.some(v => v !== null);
-    //     return value;
-    // }, [formStateValidation])
+    useEffect(() => {
+        setFormState(initialForm)
+    }, [initialForm])
 
 
-
-    const isFormValid=useMemo(()=>{
-        for(const formValue of Object.keys(formStateValidation)){
-            if(formStateValidation[formValue]!== null)return false;
-       }
-        return true;
-    },[formStateValidation])
+    const isFormValid = useMemo(() => {
+        return Object.values(formStateValidation).every(error => error === null)
+    }, [formStateValidation])
 
 
 
     const onInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = target;
+        console.log(target)
         setFormState({
             ...formState,
             [name]: value

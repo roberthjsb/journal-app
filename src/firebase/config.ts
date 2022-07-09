@@ -8,14 +8,14 @@ import {getFirestore} from 'firebase/firestore/lite'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCqw0l1SYjkV2P2XfPsdKbxV7zfA0TduV4",
-  authDomain: "journal-app-adfda.firebaseapp.com",
-  projectId: "journal-app-adfda",
-  storageBucket: "journal-app-adfda.appspot.com",
-  messagingSenderId: "148940594634",
-  appId: "1:148940594634:web:676ca7b29b5c3b5e0c4333"
+  apiKey: import.meta.env.VITE_API_APIKEY,
+  authDomain: import.meta.env.VITE_API_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_API_PROJECTID,
+  storageBucket: import.meta.env.VITE_API_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_API_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_API_APPID,
 };
-
+debugger
 // Initialize Firebase
 export const FireabaseApp = initializeApp(firebaseConfig);
 export const FirebaseAuth = getAuth(FireabaseApp);

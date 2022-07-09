@@ -9,10 +9,11 @@ import {
 import { FormEvent, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
-  stateFormValidator as StateFormValidator,
+  StateFormValidator as StateFormValidator,
   useForm,
 } from "../../hooks/useForm";
 import {
+  AuthState,
   startRegisterUserWithCredential,
   useAppDispatch,
   useAppSelector,
@@ -34,6 +35,12 @@ const formValidations: StateFormValidator = {
   ],
 };
 
+const formData ={
+  displayName: "",
+  email: "",
+  password: "",
+}
+
 export const Register = () => {
   const {
     email,
@@ -45,12 +52,8 @@ export const Register = () => {
     formState,
     onInputChange,
     isFormValid,
-  } = useForm(
-    {
-      displayName: "",
-      email: "",
-      password: "",
-    },
+  } = useForm<AuthState>(
+    formData,
     formValidations
   );
 
