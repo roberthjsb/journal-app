@@ -34,7 +34,6 @@ export const SideBar: FC<{ drawerWidth: number }> = ({ drawerWidth }) => {
         <Divider />
         <List>
           {notes.map((note) => {
-            console.log(note.id)
             return <SideBarItem key={note.id} note={note} />}
           )}
         </List>

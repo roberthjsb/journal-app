@@ -45,7 +45,6 @@ export function useForm<T>(initialForm: stateForm = {}, formValidations?: StateF
 
     const onInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = target;
-        console.log(target)
         setFormState({
             ...formState,
             [name]: value
