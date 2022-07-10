@@ -11,7 +11,7 @@ export type JournalNote = {
     title: string,
     body: string,
     date?: number,
-    imageUrls?: string[]
+    imageUrls: string[]
 }
 
 const initialState: Journal = {
@@ -27,7 +27,7 @@ export const journalSlice = createSlice({
     reducers: {
         setSaving: (state) => {
             state.isSaving = true;
-            state.messageSaved=''
+            state.messageSaved = ''
         },
         addNewEmptyNote: (state, action: PayloadAction<JournalNote>) => {
             state.notes = [...state.notes, action.payload]
@@ -35,21 +35,36 @@ export const journalSlice = createSlice({
         },
         setActiveNote: (state, action: PayloadAction<JournalNote>) => {
             state.active = { ...action.payload };
-            state.messageSaved='';
+            state.messageSaved = '';
         },
         setNotes: (state, action: PayloadAction<JournalNote[]>) => {
             state.notes = action.payload
         },
-        updateNote: (state,action: PayloadAction<JournalNote>) => {
-            state.notes =state.notes.map(
+        updateNote: (state, action: PayloadAction<JournalNote>) => {
+            state.notes = state.notes.map(
                 note => {
-                        return note.id !== action.payload.id ? note : action.payload;
-                    }
+                    return note.id !== action.payload.id ? note : action.payload;
+                }
             )
             state.isSaving = false;
-            state.messageSaved=`${state.active?.title}, actualizada correctamente`
+            state.messageSaved = `${state.active?.title}, actualizada correctamente`
         },
-        deleteNoteById: (state, action) => { },
+        updateImages: (state, action: PayloadAction<string[]>) => {
+            debugger
+            if (state.active)
+                state.active.imageUrls = [...state.active.imageUrls, ...action.payload]
+            state.isSaving = false;
+        },
+        clearJournal: (state) => {
+            state.isSaving = false;
+            state.messageSaved = ''
+            state.active = null;
+            state.notes = [];
+        },
+        deleteNoteById: (state, action: PayloadAction<string>) => {
+            state.notes = state.notes.filter(note => note.id !== action.payload)
+            state.active = null;
+        },
 
     }
 })
@@ -61,4 +76,6 @@ export const {
     setNotes,
     setSaving,
     updateNote,
+    updateImages,
+    clearJournal,
     deleteNoteById } = journalSlice.actions
