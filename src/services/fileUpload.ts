@@ -1,5 +1,5 @@
-export const fileUpload = async (file:File) => {
-    if(!file) throw new Error('Archivo no encontrado')
+export const fileUpload = async (file: File):Promise< (string | null)> => {
+    if (!file) return null
 
     const cloudUrl = 'https://api.cloudinary.com/v1_1/rjsb2022/upload'
     const formData = new FormData();
@@ -18,7 +18,7 @@ export const fileUpload = async (file:File) => {
         return data.secure_url;
 
     } catch (error) {
-
+        return null
     }
 
 
