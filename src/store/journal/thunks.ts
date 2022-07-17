@@ -41,7 +41,7 @@ export const startUpdateNote = () => {
 
         const { id, ...noteToFireStore } = { ...activeNote }
         const docRef = doc(FirebaseDB, `${uid}/journal/notes/${id}`);
-        console.log({ noteToFireStore })
+
         await setDoc(docRef, noteToFireStore, { merge: true })
         dispatch(updateNote(activeNote!))
 
@@ -86,7 +86,10 @@ export const startUploadingFile = (files: File[]) => {
     return async (dispatch: AppDispatch, getState: () => RootState) => {
         dispatch(setSaving())
         const promisesUpload = files.map(f => fileUpload(f))
-        const respUrls = await Promise.all(promisesUpload)
+        const respUrls = (await Promise.all(promisesUpload))
+            .map(f => f ?? '')
+            .filter(f => f.length > 0)
+
         dispatch(updateImages(respUrls))
 
     }

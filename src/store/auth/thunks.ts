@@ -1,11 +1,9 @@
-import { async } from "@firebase/util";
 import { loginWithEmailAndPassword, logoutSession, registerUserWithCredential, signInWithGoogle } from "../../firebase/providers";
 import { clearJournal } from "../journal/journalSlice";
 import { AppDispatch } from "../store";
 import { AuthState, checkingCredencials, login, logout } from "./authSlice";
 
-export const checkingAuthentication = (email: string, password: string) => {
-    console.log(email, password)
+export const checkingAuthentication = () => {
     return async (dispatch: AppDispatch) => {
         dispatch(checkingCredencials());
     }

@@ -53,7 +53,7 @@ export const loginWithEmailAndPassword = async ({ email, password }: { email: st
     }
 }
 
-export const logoutSession=async()=>{
+export const logoutSession = async () => {
     try {
         await FirebaseAuth.signOut()
     } catch (error) {
