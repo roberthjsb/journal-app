@@ -20,7 +20,9 @@ export const NoteView = () => {
 
   const dispatch = useAppDispatch();
   const { title, body, date,id, formState, onInputChange } = useForm(activeNote!);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
   const dateString = useMemo(() => {
     const newDate = new Date(date);
     return newDate.toUTCString();
@@ -41,6 +43,7 @@ export const NoteView = () => {
   }, [messageSaved]);
 
   const saveNote = () => {
+    console.log('click...')
     dispatch(startUpdateNote());
   };
   const onFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {

@@ -1,11 +1,12 @@
 import { collection, doc, DocumentData, deleteDoc, getDocs, QueryDocumentSnapshot, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from '../../firebase/config'
 import { fileUpload } from "../../services/fileUpload";
+
+import { JournalNote, PartialBy } from "../../types/journal.type";
 import { AppDispatch, RootState } from "../store"
-import { addNewEmptyNote, deleteNoteById, JournalNote, setActiveNote, setNotes, setSaving, updateImages, updateNote } from "./journalSlice"
+import { addNewEmptyNote, deleteNoteById, setActiveNote, setNotes, setSaving, updateImages, updateNote } from "./journalSlice"
 
 
-type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
 
 
@@ -48,9 +49,8 @@ export const startUpdateNote = () => {
     }
 }
 
-export const startDeleteNote = (id: string) => {
+export const startDeleteNote = (id?: string) => {
     return async (dispatch: AppDispatch, getState: () => RootState) => {
-        debugger
         if (!id) return;
         const { uid } = getState().auth;
         dispatch(setSaving())
@@ -70,6 +70,7 @@ export const startLoadingNote = () => {
 
         const collectionRef = collection(FirebaseDB, `${uid}/journal/notes`);
         const docs = await getDocs(collectionRef);
+
         const notes = [] as JournalNote[];
         docs.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
             notes.push({

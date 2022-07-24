@@ -18,6 +18,6 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [react()],
-    define:processEnvValues
+    define: processEnvValues
   })
 }
