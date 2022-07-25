@@ -1,11 +1,8 @@
-import 'whatwg-fetch';
 import '@testing-library/react'
+import 'whatwg-fetch';
+
 
 
 require('dotenv').config({
-    path:'.env.test'
+    path:'.env.test.local'
 });
-//                    I
-// jest.mock('./ src/helpers/getEnvironments',
-//    getEnvironments:()=>({... process.env})
-// });

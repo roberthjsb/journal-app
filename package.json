@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "jest",
+    "test": "jest --maxWorkers=25%",
     "test-cov": "jest --coverage"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
     "@rollup/plugin-replace": "^4.0.0",
+    "@swc-node/jest": "^1.5.2",
     "@swc/core": "^1.2.218",
     "@swc/jest": "^0.2.22",
     "@testing-library/react": "^13.3.0",

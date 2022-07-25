@@ -43,7 +43,7 @@ export const NoteView = () => {
   }, [messageSaved]);
 
   const saveNote = () => {
-    console.log('click...')
+   
     dispatch(startUpdateNote());
   };
   const onFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +84,7 @@ export const NoteView = () => {
         </IconButton>
 
         <Button
+       
           onClick={saveNote}
           disabled={isSaving}
           color="primary"
