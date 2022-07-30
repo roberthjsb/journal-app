@@ -8,7 +8,8 @@ import {
 } from "@mui/material";
 import { FC, useMemo } from "react";
 import { useAppDispatch } from "../../store";
-import { JournalNote, setActiveNote } from "../../store/journal/journalSlice";
+import {  setActiveNote } from "../../store/journal/journalSlice";
+import { JournalNote } from "../../types";
 
 export const SideBarItem: FC<{ note: JournalNote }> = ({ note }) => {
   const dispatch = useAppDispatch();

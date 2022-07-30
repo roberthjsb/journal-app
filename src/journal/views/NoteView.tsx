@@ -4,8 +4,11 @@ import { ChangeEvent, useEffect, useMemo, useRef } from "react";
 import Swal from "sweetalert2";
 import { useForm } from "../../hooks/useForm";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { deleteNoteById, setActiveNote } from "../../store/journal/journalSlice";
 import {
+  setActiveNote,
+} from "../../store/journal/journalSlice";
+import {
+  startDeleteNote,
   startUpdateNote,
   startUploadingFile,
 } from "../../store/journal/thunks";
@@ -51,12 +54,12 @@ export const NoteView = () => {
     const files = Array.from(target.files);
     dispatch(startUploadingFile(files));
   };
-  const onDelete = ()=>{
-      dispatch(deleteNoteById(id))
-  }
+  const onDelete = () => {
+    dispatch(startDeleteNote(id));
+  };
 
   return (
-    <Grid
+    <Grid data-testid="NoteActive"
       container
       direction={"row"}
       justifyContent="space-between"
@@ -71,6 +74,7 @@ export const NoteView = () => {
       <Grid item>
         <input
           ref={fileInputRef}
+          data-testid="fileInput"
           type={"file"}
           multiple
           onChange={onFileChange}
@@ -78,13 +82,14 @@ export const NoteView = () => {
         />
         <IconButton
           color="primary"
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => {
+            fileInputRef.current?.click();
+          }}
         >
           <UploadFileOutlined />
         </IconButton>
 
         <Button
-       
           onClick={saveNote}
           disabled={isSaving}
           color="primary"
@@ -118,13 +123,13 @@ export const NoteView = () => {
           onChange={onInputChange}
         />
       </Grid>
-      <Grid container justifyContent={'end'}>
-        <Button color="error" sx={{mt:2}} onClick={onDelete}>
-        <DeleteOutline/>
-        Borrar
+      <Grid container justifyContent={"end"}>
+        <Button color="error" sx={{ mt: 2 }} onClick={onDelete}>
+          <DeleteOutline />
+          Borrar
         </Button>
       </Grid>
-      <ImageGallery images={activeNote?.imageUrls??[]} />
+      <ImageGallery images={activeNote?.imageUrls ?? []} />
     </Grid>
   );
 };

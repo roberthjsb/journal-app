@@ -13,8 +13,9 @@ export const Journal = () => {
   return (
     <JournalLayout>
       {/* <Typography >Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis amet culpa illum quaerat consectetur beatae earum, quae, expedita eligendi, labore animi nemo et repellendus dicta sunt dolore harum est veniam.</Typography> */}
-      {!!active ? <NoteView /> : <NothingSelectedView />}
+      {active ? <NoteView /> : <NothingSelectedView />}
       <IconButton
+      data-testid="AddBtn"
         disabled={isSaving}
         onClick={newNote}
         size="large"
