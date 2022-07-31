@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "jest --maxWorkers=25%",
+    "test": "jest ",
     "test-cov": "jest --coverage"
   },
   "dependencies": {

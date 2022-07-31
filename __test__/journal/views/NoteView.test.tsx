@@ -26,7 +26,7 @@ const testStore = configureStore({
     journal: journalSlice.reducer,
     auth: authSlice.reducer,
   },
-  preloadedState: { journal: journalTestWithInfo },
+  preloadedState: { journal: journalTestWithInfo , auth:{}},
 });
 
 describe("NoteView", () => {

@@ -15,13 +15,13 @@ describe("Pages/Journal", () => {
     jest.clearAllMocks();
   });
   test("should be button add enabled ", () => {
-    render(<Journal />, testStore(testInitialStateJournal));
+    render(<Journal />, testStore({journal:testInitialStateJournal}));
     const btn = screen.getByTestId("AddBtn");
     expect(btn).not.toBeDisabled();
   });
 
   test("should call newNote when clicked button add ", () => {
-    const store = testStore(testInitialStateJournal);
+    const store = testStore({journal:testInitialStateJournal});
     const { dispatch } = store;
     const mockDispatch = jest.fn(() => dispatch);
     (store.dispatch as any)=mockDispatch
@@ -36,14 +36,14 @@ describe("Pages/Journal", () => {
   });
 
   test("should show nothingSelected when active note is null", () => {
-    render(<Journal />, testStore(testInitialStateJournal));
+    render(<Journal />, testStore({journal:testInitialStateJournal}));
     const nothingSelected = screen.getByText(/Selecciona o crea una entrada/i);
     expect(nothingSelected).toBeInTheDocument();
   });
 
   test("should show noteView when active note have values", () => {
     
-    render(<Journal />, testStore(journalTestWithInfo));
+    render(<Journal />, testStore({journal:journalTestWithInfo}));
     const NoteForm = screen.getByTestId("NoteActive");
     expect(NoteForm).toBeInTheDocument();
   });

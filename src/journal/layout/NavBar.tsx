@@ -32,7 +32,7 @@ export const NavBar: FC<{ drawerWidth: number }> = ({ drawerWidth }) => {
           <Typography variant="h6" noWrap component={"div"}>
             Journal App
           </Typography>
-          <IconButton color="error" onClick={onLogout}>
+          <IconButton color="error" onClick={onLogout} data-testid="LogoutBtn">
             <LogoutOutlined />
           </IconButton>
         </Grid>

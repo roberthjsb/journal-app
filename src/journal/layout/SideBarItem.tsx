@@ -29,7 +29,7 @@ export const SideBarItem: FC<{ note: JournalNote }> = ({ note }) => {
           <TurnedInNot />
         </ListItemIcon>
         <Grid container>
-          <ListItemText primary={newTitle} />
+          <ListItemText  data-testid={`item_${note.id}`} primary={newTitle} />
           <ListItemText secondary={body} />
         </Grid>
       </ListItemButton>

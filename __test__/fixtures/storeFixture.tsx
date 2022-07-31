@@ -13,7 +13,7 @@ export const testStore = (state: any) =>
       journal: journalSlice.reducer,
       auth: authSlice.reducer,
     },
-    preloadedState: { journal: state },
+    preloadedState:   state ,
   });
 export interface WrapperProps {
   children: ReactElement;
