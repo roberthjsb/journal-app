@@ -3,6 +3,7 @@ import { FirebaseDB } from '../../firebase/config'
 import { fileUpload } from "../../services/fileUpload";
 
 import { JournalNote, PartialBy } from "../../types/journal.type";
+import { login, logout } from "../auth/authSlice";
 import { AppDispatch, RootState } from "../store"
 import { addNewEmptyNote, deleteNoteById, setActiveNote, setNotes, setSaving, updateImages, updateNote } from "./journalSlice"
 
@@ -92,6 +93,16 @@ export const startUploadingFile = (files: File[]) => {
             .filter(f => f.length > 0)
 
         dispatch(updateImages(respUrls))
+    }
+}
 
+
+export const onChangeUser = (user:any) => {
+    return async (dispatch: AppDispatch, getState: () => RootState) => {
+        if (!user) return dispatch(logout());
+        
+        const { displayName, email, photoURL, uid } = user;//evita warning: redux
+        dispatch(login({ displayName, email, photoURL, uid }));
+        dispatch(startLoadingNote())
     }
 }

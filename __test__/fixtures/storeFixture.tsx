@@ -28,3 +28,8 @@ export const render = (
   );
   return renderRL(ui, { wrapper: Wrapper, ...renderOptions });
 };
+
+
+export const wrapperWithRedux=(store:any) => ({ children }:WrapperProps) => (
+  <Provider store={ store }>{children}</Provider>
+ )
