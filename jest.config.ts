@@ -7,5 +7,5 @@ export default {
   transformIgnorePatterns: [],
   resolver: '<rootDir>/jest.resolver.js',
   collectCoverage: false,
-  collectCoverageFrom: ["./src/**"]
+  collectCoverageFrom: ["./src/**","!./src/__test__/**/*"]
 }

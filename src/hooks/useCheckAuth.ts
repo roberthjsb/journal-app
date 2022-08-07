@@ -5,20 +5,15 @@ import { useAppSelector, useAppDispatch, logout, login } from '../store';
 import { onChangeUser, startLoadingNote } from '../store/journal/thunks';
 
 export const useCheckAuth = () => {
-    const { status } = useAppSelector((state) => state.auth);
-    const dispatch = useAppDispatch();
-  
-    useEffect(() => {
-      onAuthStateChanged(
-        FirebaseAuth,
-        (user) => {
-          dispatch(onChangeUser(user))
-        }
-      );
-    }, []);
+  const { status } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
-    return {
-        status
-    }
-    
+  useEffect(() => {
+    return onAuthStateChanged(FirebaseAuth, (user) => {
+      return dispatch(onChangeUser(user));
+    });
+  }, []);
+
+  return { status }
+
 }

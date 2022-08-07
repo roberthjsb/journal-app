@@ -1,5 +1,6 @@
-import '@testing-library/react'
 import 'whatwg-fetch';
+import '@testing-library/react'
+
 
 
 
