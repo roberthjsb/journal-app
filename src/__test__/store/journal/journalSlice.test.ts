@@ -1,6 +1,6 @@
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import { addNewEmptyNote, clearJournal, deleteNoteById, journalSlice, setActiveNote, setNotes, setSaving, updateImages, updateNote } from '../../../src/store/journal/journalSlice'
+import { addNewEmptyNote, clearJournal, deleteNoteById, journalSlice, setActiveNote, setNotes, setSaving, updateImages, updateNote } from '../../../store/journal/journalSlice'
 import { testInitialStateJournal, emptyNote, listNotes, journalTestWithInfo } from "../../fixtures/journalFixture";
 
 

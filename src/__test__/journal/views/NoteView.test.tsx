@@ -7,17 +7,17 @@ import {
   waitFor,
 } from "@testing-library/react";
 
-import { NoteView } from "../../../src/journal/views/NoteView";
+import { NoteView } from "../../../journal/views/NoteView";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import {
   journalSlice,
   setActiveNote,
   updateNote,
-} from "../../../src/store/journal/journalSlice";
+} from "../../..//store/journal/journalSlice";
 import { journalTestWithInfo } from "../../fixtures/journalFixture";
-import { authSlice } from "../../../src/store";
-import * as thunks from "../../../src/store/journal/thunks";
+import { authSlice } from "../../../store";
+import * as thunks from "../../../store/journal/thunks";
 
 import Swal from "sweetalert2";
 
@@ -26,7 +26,7 @@ const testStore = configureStore({
     journal: journalSlice.reducer,
     auth: authSlice.reducer,
   },
-  preloadedState: { journal: journalTestWithInfo },
+  preloadedState: { journal: journalTestWithInfo , auth:{}},
 });
 
 describe("NoteView", () => {

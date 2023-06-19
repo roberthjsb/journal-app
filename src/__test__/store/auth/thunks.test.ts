@@ -1,10 +1,10 @@
-import * as modMocked from "../../../src/firebase/providers";
-import { checkingCredencials, login, logout } from "../../../src/store"
-import { checkingAuthentication, startGoogleSignIn, startLoginUserWithEmailAndPassword, StartLogut, startRegisterUserWithCredential } from "../../../src/store/auth/thunks"
-import { clearJournal } from "../../../src/store/journal/journalSlice";
+import * as modMocked from "../../../firebase/providers";
+import { checkingCredencials, login, logout } from "../../../store"
+import { checkingAuthentication, startGoogleSignIn, startLoginUserWithEmailAndPassword, StartLogut, startRegisterUserWithCredential } from "../../../store/auth/thunks"
+import { clearJournal } from "../../../store/journal/journalSlice";
 import { authenticatedState, notAuthenticatedState, testUser } from "../../fixtures/authFixtures";
 
-jest.mock("../../../src/firebase/providers")
+jest.mock("../../../firebase/providers")
 
 
 describe('auth thunks', () => {

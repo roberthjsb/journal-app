@@ -6,7 +6,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authSlice } from "../../src/store";
 import { journalSlice } from "../../src/store/journal/journalSlice";
 import { journalTestWithInfo } from "./journalFixture";
-import { MemoryRouter as Router } from 'react-router-dom'
 
 export const testStore = (state: any) =>
   configureStore({
@@ -29,15 +28,8 @@ export const render = (
   );
   return renderRL(ui, { wrapper: Wrapper, ...renderOptions });
 };
-export const renderWithRouter = (
-  ui: ReactElement,
-  store: any,
-  renderOptions?: RenderOptions
-) => {
-  const Wrapper = ({ children }: WrapperProps): ReactElement => (
-    <Router>
-      <Provider store={store}>{children}</Provider>
-    </Router>
-  );
-  return renderRL(ui, { wrapper: Wrapper, ...renderOptions });
-};
+
+
+export const wrapperWithRedux=(store:any) => ({ children }:WrapperProps) => (
+  <Provider store={ store }>{children}</Provider>
+ )

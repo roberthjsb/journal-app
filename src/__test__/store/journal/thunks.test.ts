@@ -1,12 +1,12 @@
-import { startDeleteNote, startLoadingNote, startNewNote, startUpdateNote, startUploadingFile } from '../../../src/store/journal/thunks'
+import { startDeleteNote, startLoadingNote, startNewNote, startUpdateNote, startUploadingFile } from '../../../store/journal/thunks'
 import { journalTestWithInfo, listNotes, testInitialStateJournal } from '../../fixtures/journalFixture'
 import * as modMocked from 'firebase/firestore/lite'
-import * as mockFile from '../../../src/services/fileUpload'
+import * as mockFile from '../../../services/fileUpload'
 
 
 
-jest.mock('../../../src/services/fileUpload.ts')
-jest.mock("../../../src/firebase/providers")
+jest.mock('../../../services/fileUpload.ts')
+jest.mock("../../../firebase/providers")
 jest.mock("firebase/firestore/lite")
 describe('journal thunks', () => {
     const dispatch = jest.fn();

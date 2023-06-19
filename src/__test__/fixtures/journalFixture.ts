@@ -1,5 +1,5 @@
 
-import { Journal, JournalNote, PartialBy } from "../../src/types/journal.type";
+import { Journal, JournalNote, PartialBy } from "../../types/journal.type";
 
 
 

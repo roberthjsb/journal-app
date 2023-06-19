@@ -1,4 +1,4 @@
-import { AuthState, AuthUserState } from "../../src/store/auth/authSlice"
+import { AuthState, AuthUserState } from "../../store/auth/authSlice"
 
 export const initialState: AuthState = {
     status: 'checking',
@@ -42,3 +42,8 @@ export const testUser:AuthUserState={
     displayName: 'testuser',
     photoURL: 'http://fotos/foto.jpg',
 }
+
+export const testLoginFormData = {
+    email: "",
+    password: "",
+  }

@@ -127,9 +127,9 @@ export const Register = () => {
             </Grid>
           </Grid>
           <Grid container direction="row" justifyContent="end">
-            <Typography sx={{ mr: 1 }}> ¿Ya tienes una Crear?</Typography>
+            <Typography sx={{ mr: 1 }}>¿Ya tienes una Crear?</Typography>
             <Link to={"/auth/login"} component={RouterLink} color="inherit">
-              ingresar
+              Ingresar
             </Link>
           </Grid>
         </Grid>

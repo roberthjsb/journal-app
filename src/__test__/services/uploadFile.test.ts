@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import { fileUpload } from '../../src/services/fileUpload';
+import { fileUpload } from '../../services/fileUpload';
 
 
 

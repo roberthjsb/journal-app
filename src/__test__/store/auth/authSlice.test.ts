@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { authSlice, checkingCredencials, login, logout } from "../../../src/store/auth/authSlice";
+import { authSlice, checkingCredencials, login, logout } from "../../../store/auth/authSlice";
 import { authenticatedState, initialState, initialState as testInitialState, notAuthenticatedState, notAuthenticatedWithState, testUser } from "../../fixtures/authFixtures";
 
 

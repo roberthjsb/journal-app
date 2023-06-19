@@ -18,8 +18,8 @@ import {
   useAppSelector,
 } from "../../store";
 const formData = {
-  email: "roberth@gmail.com",
-  password: "1234567",
+  email: "",
+  password: "",
 }
 
 const formValidations: StateFormValidator = {
@@ -64,7 +64,7 @@ export const Login = () => {
               placeholder="Correo"
               fullWidth={true}
               name="email"
-              value={email}
+              
               onChange={onInputChange}
             />
           </Grid>
