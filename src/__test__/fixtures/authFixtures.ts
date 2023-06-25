@@ -1,4 +1,4 @@
-import { AuthState, AuthUserState } from "../../store/auth/authSlice"
+import { AuthState, AuthUserState } from "../../types"
 
 export const initialState: AuthState = {
     status: 'checking',

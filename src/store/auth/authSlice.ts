@@ -1,16 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { AuthState } from "../../types";
 
-export type statusState={ status?: 'checking' | 'not-authenticated' | 'authenticated'}
-export type errorState= { errorMessage?: string | null}
-export type AuthUserState = {
-    uid?: string | null,
-    email?: string | null,
-    displayName?: string | null,
-    photoURL?: string | null,
-}
-export type AuthState= statusState & AuthUserState & errorState;
-export type StatusResponse = {ok:boolean};
-export type AuthResult = AuthState & StatusResponse
 
 
 

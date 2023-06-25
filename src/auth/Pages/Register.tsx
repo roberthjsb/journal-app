@@ -13,12 +13,12 @@ import {
   useForm,
 } from "../../hooks/useForm";
 import {
-  AuthState,
   startRegisterUserWithCredential,
   useAppDispatch,
   useAppSelector,
 } from "../../store";
 import { AuthLayout } from "./authLayout";
+import { AuthState } from "../../types";
 
 const formValidations: StateFormValidator = {
   email: [
@@ -70,10 +70,11 @@ export const Register = () => {
   };
   return (
     <AuthLayout title="Registrar usuario">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} noValidate>
         <Grid container>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
+              data-testid="displayName"
               label="Nombre Completo"
               type="text"
               placeholder="Nombre Completo"
@@ -87,6 +88,7 @@ export const Register = () => {
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
+              data-testid="email"
               label="Correo"
               type="email"
               placeholder="Correo"
@@ -100,6 +102,7 @@ export const Register = () => {
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
+              data-testid="password"
               label="Contraseña"
               type="password"
               placeholder="Contraseña"
@@ -112,7 +115,7 @@ export const Register = () => {
             />
           </Grid>
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
-            <Grid item xs={12} display={!!errorMessage ? '' : 'none'}>
+            <Grid item xs={12} display={!!errorMessage ? '' : 'none'} data-testid="error-msg">
               <Alert severity="error">{errorMessage}</Alert>
             </Grid>
             <Grid item xs={12}>

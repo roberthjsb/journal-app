@@ -20,7 +20,7 @@ jest.mock('firebase/auth', () => {
 import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { FirebaseAuth } from '../../firebase/config';
 import { loginWithEmailAndPassword, logoutSession, registerUserWithCredential, signInWithGoogle } from '../../firebase/providers'
-import { AuthUserState, StatusResponse, errorState } from '../../store';
+import { AuthUserState, StatusResponse, errorState } from '../../types';
 
 
 

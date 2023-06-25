@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Journal, JournalNote, PartialBy } from "../../types/journal.type";
+import { Journal, JournalNote, PartialBy } from "../../types";
 
 const initialState: Journal = {
     isSaving: false,

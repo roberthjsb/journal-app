@@ -1,7 +1,8 @@
 import { loginWithEmailAndPassword, logoutSession, registerUserWithCredential, signInWithGoogle } from "../../firebase/providers";
+import { AuthState } from "../../types";
 import { clearJournal } from "../journal/journalSlice";
 import { AppDispatch } from "../store";
-import { AuthState, checkingCredencials, login, logout } from "./authSlice";
+import {  checkingCredencials, login, logout } from "./authSlice";
 
 export const checkingAuthentication = () => {
     return async (dispatch: AppDispatch) => {

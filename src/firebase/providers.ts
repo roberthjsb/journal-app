@@ -1,5 +1,5 @@
 import { AuthError, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword } from "firebase/auth"
-import { AuthResult, AuthUserState, errorState, StatusResponse } from "../store";
+import { AuthResult, AuthUserState, errorState, StatusResponse } from "../types";
 import { FirebaseAuth } from "./config"
 
 const googleProvider = new GoogleAuthProvider();

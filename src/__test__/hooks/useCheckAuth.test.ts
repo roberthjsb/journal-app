@@ -1,13 +1,13 @@
 import { testStore, wrapperWithRedux } from '../fixtures/storeFixture';
-import { authenticatedState as auth, authenticatedState } from './../fixtures/authFixtures';
+import { authenticatedState,initialState } from './../fixtures/authFixtures';
 import { cleanup, renderHook, waitFor } from '@testing-library/react'
 import { useCheckAuth } from '../../hooks/useCheckAuth'
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import * as auththunks from '../../store/journal/thunks';
 import { Auth, User } from 'firebase/auth';
 
 
-const cbStore = testStore({ auth });
+
 const mockDispatch = jest.fn()
 
 jest.mock("react-redux", () => ({
@@ -19,26 +19,31 @@ jest.mock("react-redux", () => ({
 
 jest.mock('firebase/auth', () => ({
     ...jest.requireActual('firebase/auth'),
-    onAuthStateChanged: (_: any, cb: (user: User | null) => void) => cb(authenticatedState as User|null)
+    onAuthStateChanged: (_: any, callback: (user: User | null) => void) => callback(authenticatedState as User|null)
 }))
 
-describe('useCheckAuth ', () => {
+describe('useCheckAuth', () => {
     afterEach(() => {
         cleanup();
         jest.clearAllMocks();
     })
 
     test('should return the auth state status', () => {
-        (useSelector as jest.Mock).mockImplementation(cb => cb(cbStore.getState()))
+        const cbStore = testStore({ auth:authenticatedState });
+        (useSelector as jest.Mock).mockImplementation(cb =>cb(cbStore.getState()))
+        
         const { result } = renderHook(() => useCheckAuth(), { wrapper: wrapperWithRedux(cbStore) })
-        expect(result.current.status).toBe('authenticated')
+
+         expect(result.current.status).toBe(authenticatedState.status)
     })
 
-    test('should first', async () => {
-        (useSelector as jest.Mock).mockImplementation(cb => cb(cbStore.getState()))
+    test('should call dispatch and onChangeUser when hook receive response of firebase auth with new state of authentication', async () => {
+        const testingStore = testStore({auth: initialState });
+        (useSelector as jest.Mock).mockImplementation(cb => cb(testingStore.getState()))
         const spyonChangeUser = jest.spyOn(auththunks, 'onChangeUser')
 
-        renderHook(() => useCheckAuth(), { wrapper: wrapperWithRedux(cbStore) })
+        renderHook(() => useCheckAuth(), { wrapper: wrapperWithRedux(testingStore) })
+        
         await waitFor(() => {
             expect(mockDispatch).toHaveBeenCalledTimes(1)
             expect(spyonChangeUser).toHaveBeenCalledTimes(1)

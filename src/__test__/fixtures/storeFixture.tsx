@@ -1,19 +1,20 @@
 import { render as renderRL, RenderOptions } from "@testing-library/react";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { Provider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore,clearAllListeners } from "@reduxjs/toolkit";
 
 import { authSlice } from "../../store/auth/authSlice";
 import { journalSlice } from "../../store/journal/journalSlice";
-import { journalTestWithInfo } from "./journalFixture";
+import { MemoryRouter as Router} from 'react-router-dom'
+import { StoreState } from "../../types";
 
-export const testStore = (state: any) =>
+export const testStore = (state: Partial<StoreState>) =>
   configureStore({
     reducer: {
       journal: journalSlice.reducer,
       auth: authSlice.reducer,
     },
-    preloadedState: { journal: state },
+    preloadedState: state,
   });
 export interface WrapperProps {
   children: ReactElement;
@@ -25,6 +26,19 @@ export const render = (
 ) => {
   const Wrapper = ({ children }: WrapperProps): ReactElement => (
     <Provider store={store}>{children}</Provider>
+  );
+  return renderRL(ui, { wrapper: Wrapper, ...renderOptions });
+};
+
+export const renderWithRouter = (
+  ui: ReactElement,
+  store: any,
+  renderOptions?: RenderOptions
+) => {
+  const Wrapper = ({ children }: WrapperProps): ReactElement => (
+   <Router>
+     <Provider store={store}>{children}</Provider>
+   </Router>
   );
   return renderRL(ui, { wrapper: Wrapper, ...renderOptions });
 };

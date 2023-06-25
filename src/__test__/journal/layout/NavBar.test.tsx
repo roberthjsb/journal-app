@@ -5,10 +5,10 @@ import React from "react"
 import { NavBar } from "../../../journal/layout/NavBar";
 import * as  authThunks from "../../../store/auth/thunks"
 import { render, testStore } from "../../fixtures/storeFixture";
-import {authenticatedState } from "../../fixtures/authFixtures";
+import { authenticatedState } from "../../fixtures/authFixtures";
 
 describe('Test NavBar', () => {
-    afterEach(()=>{
+    afterEach(() => {
         cleanup()
     })
     test('should render Navbar', () => {
@@ -20,20 +20,19 @@ describe('Test NavBar', () => {
 
     test('should call dispatch with StartLogut when clicked logout', async () => { 
         const store = testStore({auth:authenticatedState});
-        const { dispatch } = store;
-        const mockDispatch = jest.fn(() => dispatch);
-        (store.dispatch as any)=mockDispatch
-        const spy = jest.spyOn(authThunks,'StartLogut')
+        const mockDispatch = jest.fn();
+        (store.dispatch as any) = mockDispatch;
+        (authThunks.StartLogut as any) = jest.fn();
 
 
         render(<NavBar drawerWidth={250} />, store);
         const btn = screen.getByTestId('LogoutBtn')
         await userEvent.click(btn)
         expect(mockDispatch).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalled();
+        expect(authThunks.StartLogut).toHaveBeenCalled();
 
 
-     })
+    })
 })
 
 
