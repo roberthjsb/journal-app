@@ -9,7 +9,7 @@ import * as authThunks from "../../../store/auth/thunks"
 describe('auth/Pages Register', () => {
   afterEach(() => {
     cleanup();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   })
   test('should render Register page', async () => {
     const store = testStore({ auth: notAuthenticatedState })
@@ -22,8 +22,8 @@ describe('auth/Pages Register', () => {
   })
   test('should call startRegisterUserWithCredential when fields register are valid', async () => {
 
-    const startRegisterUserWithCredentialSpy = jest.spyOn(authThunks, 'startRegisterUserWithCredential')
-    const mockDispatch = jest.fn();
+    const startRegisterUserWithCredentialSpy = vi.spyOn(authThunks, 'startRegisterUserWithCredential')
+    const mockDispatch = vi.fn();
     const store = testStore({ auth: notAuthenticatedState })
     store.dispatch = mockDispatch
 
@@ -52,8 +52,8 @@ describe('auth/Pages Register', () => {
   describe('When fields register are valid', () => {
     test('should not call startRegisterUserWithCredential', async () => {
 
-      const startRegisterUserWithCredentialSpy = jest.spyOn(authThunks, 'startRegisterUserWithCredential')
-      const mockDispatch = jest.fn();
+      const startRegisterUserWithCredentialSpy = vi.spyOn(authThunks, 'startRegisterUserWithCredential')
+      const mockDispatch = vi.fn();
       const store = testStore({ auth: notAuthenticatedState })
       store.dispatch = mockDispatch
 

@@ -1,34 +1,36 @@
 
 import { testUser } from './../fixtures/authFixtures';
-jest.mock('firebase/auth', () => {
+vi.mock('firebase/auth', async () => {
+    const module: typeof import('firebase/auth') = await  vi.importActual('firebase/auth')
     return {
-        ...jest.requireActual('firebase/auth'),
-        signInWithPopup: jest.fn()
+        ...module,
+        signInWithPopup: vi.fn()
             .mockResolvedValueOnce({
                 user: testUser
             }),
-        signInWithEmailAndPassword: jest.fn()
+        signInWithEmailAndPassword: vi.fn()
             .mockResolvedValueOnce({
                 user: testUser
             }),
-        createUserWithEmailAndPassword: jest.fn().mockResolvedValueOnce({
+        createUserWithEmailAndPassword: vi.fn().mockResolvedValueOnce({
             user: testUser
         }),
-        updateProfile: jest.fn().mockImplementation(() => Promise.resolve())
+        updateProfile: vi.fn().mockImplementation(() => Promise.resolve())
     }
 })
 import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { FirebaseAuth } from '../../firebase/config';
 import { loginWithEmailAndPassword, logoutSession, registerUserWithCredential, signInWithGoogle } from '../../firebase/providers'
 import { AuthUserState, StatusResponse, errorState } from '../../types';
+import { Mock, test, vi } from 'vitest';
 
 
 
 describe('firebase providers', () => {
     describe('logoutSession', () => {
-        const spySignOut = jest.spyOn(FirebaseAuth, 'signOut');
+        const spySignOut = vi.spyOn(FirebaseAuth, 'signOut');
         afterEach(() => {
-            jest.clearAllMocks()
+            vi.clearAllMocks()
         });
         test('should call logoutSession', async () => {
             await logoutSession()
@@ -48,7 +50,7 @@ describe('firebase providers', () => {
 
     describe('signInWithGoogle', () => {
         afterEach(() => {
-            jest.clearAllMocks()
+            vi.clearAllMocks()
         });
 
         test('should call signInWithGoogle and return user Information', async () => {
@@ -60,7 +62,7 @@ describe('firebase providers', () => {
         test('should call signInWithGoogle and return error', async () => {
 
             const errorMsg = 'Failed test';
-            (signInWithPopup as jest.Mock).mockImplementation(() => {
+            (signInWithPopup as Mock).mockImplementation(() => {
                 const err: Error = new Error(errorMsg);
                 throw { ...err, code: errorMsg }
             })
@@ -86,7 +88,7 @@ describe('firebase providers', () => {
         test('should call signInWithEmailAndPassword and return error', async () => {
 
             const errorMsg = 'Failed test';
-            (signInWithEmailAndPassword as jest.Mock).mockImplementation(() => {
+            (signInWithEmailAndPassword as Mock).mockImplementation(() => {
                 const err: Error = new Error(errorMsg);
                 throw { ...err, code: errorMsg }
             })
@@ -100,7 +102,7 @@ describe('firebase providers', () => {
 
     describe('registerUserWithCredential', () => {
         afterEach(() => {
-            jest.clearAllMocks()
+            vi.clearAllMocks()
         })
 
         test('should call createUserWithEmailAndPassword  and updateProfile when called registerUserWithCredential an return testResult with email and displayname  ', async () => {
@@ -121,7 +123,7 @@ describe('firebase providers', () => {
 
         test('should return an error result when have exception', async () => {
              const errorMsg = 'Failed test';
-            (createUserWithEmailAndPassword as jest.Mock).mockImplementation(()=>{
+            (createUserWithEmailAndPassword as Mock).mockImplementation(()=>{
                 const err: Error = new Error(errorMsg);
                 throw { ...err, code: errorMsg }
             })

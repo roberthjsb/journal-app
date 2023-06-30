@@ -39,10 +39,10 @@ describe('SideBarItem', () => {
             journal: journalTestWithInfo
         });
         const { dispatch } = store;
-        const mockDispatch = jest.fn(() => dispatch);
+        const mockDispatch = vi.fn(() => dispatch);
         (store.dispatch as any) = mockDispatch
-        const spy = jest.spyOn(journalSlice,'setActiveNote')
-        // const spy = jest.spyOn(authThunks,'StartLogut')
+        const spy = vi.spyOn(journalSlice,'setActiveNote')
+        // const spy = vi.spyOn(authThunks,'StartLogut')
 
         render(<SideBarItem key={1} note={note!} />,store)
         const btn= screen.getByRole('button')

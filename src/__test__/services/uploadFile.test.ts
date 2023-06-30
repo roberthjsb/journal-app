@@ -1,19 +1,20 @@
 import 'whatwg-fetch';
 import { fileUpload } from '../../services/fileUpload';
+import { vi,test, describe, expect } from 'vitest';
 
 
 
 const urlresp = 'https://pruebas.com/foto.jpg'
 
 
-jest.mock('whatwg-fetch')
+vi.mock('whatwg-fetch')
 
 describe('fileUpload unit test', () => {
 
 
   test('should return a string when upload files is success', async () => {
 
-    (fetch as any) = jest.fn().mockResolvedValue({
+    (fetch as any) = vi.fn().mockResolvedValue({
       url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib-rb-1.2.18',
       ok: true,
       json: () => Promise.resolve({ secure_url: urlresp })
@@ -29,7 +30,7 @@ describe('fileUpload unit test', () => {
 
   test('should return null when upload file fail', async () => {
 
-    (fetch as any) = jest.fn().mockResolvedValue({
+    (fetch as any) = vi.fn().mockResolvedValue({
       url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib-rb-1.2.18',
 
       json: () => Promise.reject({ secure_url: urlresp })
@@ -44,7 +45,7 @@ describe('fileUpload unit test', () => {
   test('should return null when file is not get', async () => {
     let file = new File([], 'foto.jpg');
     (file as any) = null;
-    (fetch as any) = jest.fn()
+    (fetch as any) = vi.fn()
 
     const url = await fileUpload(file);
 

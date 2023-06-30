@@ -1,3 +1,4 @@
+
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -18,6 +19,21 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [react()],
-    define: processEnvValues
+    define: processEnvValues,
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      coverage: {
+        reporter: ['text', 'html', 'clover', 'json'],
+        exclude: [
+          'node_modules/',
+          'src/setupTests.ts',
+        ],
+         coverage: {
+          provider:'istanbul',
+          exclude: ['./src/__test__/*'],
+    },
+      },
+    },
   })
 }

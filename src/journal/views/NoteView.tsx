@@ -24,7 +24,7 @@ export const NoteView = () => {
   const dispatch = useAppDispatch();
   const { title, body, date,id, formState, onInputChange } = useForm(activeNote!);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement|null>(null);
   
   const dateString = useMemo(() => {
     const newDate = new Date(date);
@@ -78,7 +78,7 @@ export const NoteView = () => {
           type={"file"}
           multiple
           onChange={onFileChange}
-          style={{ display: "none" }}
+          style={{ display: "none",height:1 }}
         />
         <IconButton
           color="primary"
@@ -124,7 +124,7 @@ export const NoteView = () => {
         />
       </Grid>
       <Grid container justifyContent={"end"}>
-        <Button color="error" sx={{ mt: 2 }} onClick={onDelete}>
+        <Button color="error" sx={{ mt: 2 }} onClick={onDelete} >
           <DeleteOutline />
           Borrar
         </Button>

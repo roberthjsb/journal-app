@@ -12,7 +12,7 @@ import * as thunks from "../../../store/journal/thunks";
 describe("Pages/Journal", () => {
   afterEach(() => {
     cleanup();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   test("should be button add enabled ", () => {
     render(<Journal />, testStore({journal:testInitialStateJournal}));
@@ -23,9 +23,9 @@ describe("Pages/Journal", () => {
   test("should call newNote when clicked button add ", () => {
     const store = testStore({journal:testInitialStateJournal});
     const { dispatch } = store;
-    const mockDispatch = jest.fn(() => dispatch);
+    const mockDispatch = vi.fn(() => dispatch);
     (store.dispatch as any)=mockDispatch
-    const spy =jest.spyOn(thunks,'startNewNote')
+    const spy =vi.spyOn(thunks,'startNewNote')
     render(<Journal />, store);
 
     const btn = screen.getByTestId("AddBtn");

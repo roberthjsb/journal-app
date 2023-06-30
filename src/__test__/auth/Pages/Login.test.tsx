@@ -12,7 +12,7 @@ describe('auth/Pages Login', () => {
 
     afterEach(() => {
         cleanup();
-        jest.clearAllMocks()
+        vi.clearAllMocks()
     })
     test('should render page login', () => {
         const store = testStore({ auth: notAuthenticatedState })
@@ -27,7 +27,7 @@ describe('auth/Pages Login', () => {
 
 
     test('should called the hooks useForm when text input change values ', async () => {
-        const userFormSpy = jest.spyOn(useFormHook, 'useForm')
+        const userFormSpy = vi.spyOn(useFormHook, 'useForm')
 
         const store = testStore({ auth: notAuthenticatedState })
         renderWithRouter(<Login />, store)
@@ -44,7 +44,7 @@ describe('auth/Pages Login', () => {
 
     
     test('should disable button when have been checking user ', async () => {
-        // const userFormSpy = jest.spyOn(useFormHook, 'useForm')
+        // const userFormSpy = vi.spyOn(useFormHook, 'useForm')
 
         const store = testStore({ auth: initialState })
         renderWithRouter(<Login />, store)
@@ -61,8 +61,8 @@ describe('auth/Pages Login', () => {
 
       
     test('should call startLoginUserWithEmailAndPassword when user fill fields and clicked login button', async () => {
-        const startLoginUserWithEmailAndPasswordSpy =jest.spyOn(authThunks,'startLoginUserWithEmailAndPassword')
-        const mockDispatch=jest.fn();
+        const startLoginUserWithEmailAndPasswordSpy =vi.spyOn(authThunks,'startLoginUserWithEmailAndPassword')
+        const mockDispatch=vi.fn();
         const store = testStore({ auth: notAuthenticatedState })
         store.dispatch=mockDispatch
 
@@ -88,8 +88,8 @@ describe('auth/Pages Login', () => {
 
 
     test('should call startGoogleSignIn when user fill fields and clicked google button', async () => {
-        const startGoogleSignInSpy =jest.spyOn(authThunks,'startGoogleSignIn')
-        const mockDispatch=jest.fn();
+        const startGoogleSignInSpy =vi.spyOn(authThunks,'startGoogleSignIn')
+        const mockDispatch=vi.fn();
         const store = testStore({ auth: notAuthenticatedState })
         store.dispatch=mockDispatch
 

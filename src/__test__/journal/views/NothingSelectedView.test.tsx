@@ -1,4 +1,3 @@
-import React from "react";
 import {screen} from '@testing-library/react'
 import { NothingSelectedView } from "../../../journal/views/NothingSelectedView";
 import { render, testStore } from "../../fixtures/storeFixture";

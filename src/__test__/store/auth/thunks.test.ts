@@ -1,20 +1,21 @@
+import { vi,Mock } from "vitest";
 import * as modMocked from "../../../firebase/providers";
 import { checkingCredencials, login, logout } from "../../../store"
 import { checkingAuthentication, startGoogleSignIn, startLoginUserWithEmailAndPassword, StartLogut, startRegisterUserWithCredential } from "../../../store/auth/thunks"
 import { clearJournal } from "../../../store/journal/journalSlice";
 import { authenticatedState, notAuthenticatedState, testUser } from "../../fixtures/authFixtures";
 
-jest.mock("../../../firebase/providers")
+vi.mock("../../../firebase/providers")
 
 
 describe('auth thunks', () => {
-     const dispatch = jest.fn();
-     const signInWithGoogle = modMocked.signInWithGoogle as jest.Mock
-     const loginWithEmailAndPassword = modMocked.loginWithEmailAndPassword as jest.Mock
-     const registerUserWithCredential= modMocked.registerUserWithCredential as jest.Mock
+     const dispatch = vi.fn();
+     const signInWithGoogle = modMocked.signInWithGoogle as Mock
+     const loginWithEmailAndPassword = modMocked.loginWithEmailAndPassword as Mock
+     const registerUserWithCredential= modMocked.registerUserWithCredential as Mock
 
      beforeEach(() => {
-          jest.clearAllMocks()
+          vi.clearAllMocks()
      })
 
      test('should call the checkingCredential', async () => {

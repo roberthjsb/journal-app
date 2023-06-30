@@ -2,18 +2,19 @@ import { startDeleteNote, startLoadingNote, startNewNote, startUpdateNote, start
 import { journalTestWithInfo, listNotes, testInitialStateJournal } from '../../fixtures/journalFixture'
 import * as modMocked from 'firebase/firestore/lite'
 import * as mockFile from '../../../services/fileUpload'
+import { Mock, vi } from 'vitest'
 
 
 
-jest.mock('../../../services/fileUpload.ts')
-jest.mock("../../../firebase/providers")
-jest.mock("firebase/firestore/lite")
+vi.mock('../../../services/fileUpload.ts')
+vi.mock("../../../firebase/providers")
+vi.mock("firebase/firestore/lite")
 describe('journal thunks', () => {
-    const dispatch = jest.fn();
-    const getState = jest.fn();
-    const doc = modMocked.doc as jest.Mock;
-    const deleteDoc = modMocked.deleteDoc as jest.Mock;
-    const getDocs = modMocked.getDocs as jest.Mock;
+    const dispatch = vi.fn();
+    const getState = vi.fn();
+    const doc = modMocked.doc as Mock;
+    const deleteDoc = modMocked.deleteDoc as Mock;
+    const getDocs = modMocked.getDocs as Mock;
 
 
  
@@ -23,7 +24,7 @@ describe('journal thunks', () => {
 
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     })
 
     test('should call setSaving, addNewEmptyNote and setActiveNote when called startNewNote', async () => {
@@ -75,7 +76,7 @@ describe('journal thunks', () => {
 
 
     test('should call setSaving and updateImages and upload 2 images', async () => {
-        const mockfileUpload = mockFile.fileUpload as jest.Mock;
+        const mockfileUpload = mockFile.fileUpload as Mock;
         mockfileUpload
             .mockResolvedValueOnce('http://foto1.abc.jpg')
             .mockResolvedValueOnce('http://foto2.abc.jpg')
@@ -95,10 +96,10 @@ describe('journal thunks', () => {
 
     test('should call setNotes with dispatch, get notes and save in store ', async () => {
         doc.mockReturnValue({ id: '123456abc' })
-        const mockDocList = jest.fn()
+        const mockDocList = vi.fn()
         .mockImplementation((l)=>({
             id:expect.any(String),
-            data:jest.fn().mockReturnValue(l)
+            data:vi.fn().mockReturnValue(l)
         }))
         getDocs.mockResolvedValue(listNotes.map(l=> mockDocList(l)))
 

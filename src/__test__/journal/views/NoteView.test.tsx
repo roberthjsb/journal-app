@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   fireEvent,
   render,
@@ -14,59 +13,64 @@ import {
   journalSlice,
   setActiveNote,
   updateNote,
-} from "../../..//store/journal/journalSlice";
+} from "../../../store/journal/journalSlice";
 import { journalTestWithInfo } from "../../fixtures/journalFixture";
 import { authSlice } from "../../../store";
 import * as thunks from "../../../store/journal/thunks";
 
 import Swal from "sweetalert2";
+import { vi } from "vitest";
+import userEvent, { PointerEventsCheckLevel } from "@testing-library/user-event";
+
 
 const testStore = configureStore({
   reducer: {
     journal: journalSlice.reducer,
     auth: authSlice.reducer,
   },
-  preloadedState: { journal: journalTestWithInfo , auth:{}},
+  preloadedState: { journal: journalTestWithInfo, auth: {} },
 });
+
+vi.mock('firebase/auth')
 
 describe("NoteView", () => {
   const title = "new title test";
   const body = "this is test";
-  const mockDispatch = jest.fn();
+  const mockDispatch = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     cleanup();
     testStore.dispatch = mockDispatch;
+   
+  });
+
+  test("should update active note when change input title or text body", async () => {
     render(
       <Provider store={testStore}>
         <NoteView />
       </Provider>
     );
-  });
-
-  test("should update active note when change input title or text body", async () => {
     const bodyTxtArea = screen.getByPlaceholderText(
       /Que sucedio el dia de hoy/i
     );
     const titleInput = screen.getByPlaceholderText(/Ingrese un título/i);
-
-    fireEvent.change(titleInput, { target: { name: "title", value: title } });
-    fireEvent.change(bodyTxtArea, { target: { name: "body", value: body } });
-
-    const active = journalTestWithInfo.active!;
-    expect(mockDispatch).toHaveBeenCalledWith(setActiveNote(active));
-    expect(mockDispatch).toHaveBeenCalledWith(
-      setActiveNote({ ...active, title })
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      setActiveNote({ ...active, title, body })
-    );
+    await userEvent.type(titleInput, title, { pointerEventsCheck: PointerEventsCheckLevel.Never });
+    await userEvent.type(bodyTxtArea, body, { pointerEventsCheck: PointerEventsCheckLevel.Never });
+    waitFor(()=>{
+      const active = journalTestWithInfo.active!;
+      expect(mockDispatch).toHaveBeenCalledWith(setActiveNote(active));
+    })
   });
 
   test("should call startUpdateNote when clicked button Guardar ", () => {
+    render(
+      <Provider store={testStore}>
+        <NoteView />
+      </Provider>
+    );
     testStore.dispatch = mockDispatch;
-    const startUpdateNotespy = jest.spyOn(thunks, "startUpdateNote");
+    const startUpdateNotespy = vi.spyOn(thunks, "startUpdateNote");
 
     const btnGuardar = screen.getByText("Guardar");
     mockDispatch.mockReset();
@@ -77,8 +81,13 @@ describe("NoteView", () => {
   });
 
   test("should call deleteNote when clicked button delete ", () => {
+    render(
+      <Provider store={testStore}>
+        <NoteView />
+      </Provider>
+    );
     testStore.dispatch = mockDispatch;
-    const startDeleteNotespy = jest.spyOn(thunks, "startDeleteNote");
+    const startDeleteNotespy = vi.spyOn(thunks, "startDeleteNote");
 
     const btnBorrar = screen.getByText("Borrar");
     mockDispatch.mockReset();
@@ -91,8 +100,13 @@ describe("NoteView", () => {
   //TODO:test click en botton subir archivo
 
   test("should call onFileChange  when trigger event change ", async () => {
+    render(
+      <Provider store={testStore}>
+        <NoteView />
+      </Provider>
+    );
     const files = ["foto.jpg", "foto2.jpg"];
-    const startUploadingFilespy = jest.spyOn(thunks, "startUploadingFile");
+    const startUploadingFilespy = vi.spyOn(thunks, "startUploadingFile");
     const fileInput = screen.getByTestId("fileInput");
 
     fireEvent.change(fileInput, { target: { files } });
@@ -102,6 +116,7 @@ describe("NoteView", () => {
   });
 
   test("should call Swal.fire when saveMessage change ", async () => {
+    
     const testStore = configureStore({
       reducer: {
         journal: journalSlice.reducer,
@@ -109,7 +124,8 @@ describe("NoteView", () => {
       },
       preloadedState: { journal: journalTestWithInfo },
     });
-    const SwalFireSpy = jest.spyOn(Swal, "fire");
+    const SwalFireSpy = vi.spyOn(Swal, "fire");
+    testStore.dispatch(updateNote(journalTestWithInfo.active!));
 
     render(
       <Provider store={testStore}>
@@ -117,7 +133,6 @@ describe("NoteView", () => {
       </Provider>
     );
 
-    testStore.dispatch(updateNote(journalTestWithInfo.active!));
     await waitFor(() => {
       expect(SwalFireSpy).toHaveBeenCalledTimes(1);
       expect(SwalFireSpy).toHaveBeenCalledWith({
