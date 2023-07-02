@@ -1,4 +1,3 @@
-import React from "react";
 import { cleanup, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Journal } from "../../../journal/Pages/Journal";
@@ -8,6 +7,7 @@ import {
   testInitialStateJournal,
 } from "../../fixtures/journalFixture";
 import * as thunks from "../../../store/journal/thunks";
+import { vi } from "vitest";
 
 describe("Pages/Journal", () => {
   afterEach(() => {
